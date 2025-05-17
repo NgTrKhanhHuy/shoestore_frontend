@@ -1,0 +1,200 @@
+/* Base Styles */
+body {
+    font-family: Tahoma, sans-serif;
+    font-size: 0.8rem;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0 40px;
+}
+
+.main {
+    flex: 1;
+    padding-top: 80px;
+}
+
+.hero, .footer {
+    background: #f8f9fa;
+}
+
+.hero {
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.footer {
+    margin-top: auto;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Navbar */
+.navbar {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+.nav {
+    gap: 0.8rem;
+    flex-wrap: nowrap;
+    padding-right: 40px;
+}
+
+.navLink, .moreButton, .categoryParentLink, .bi-person, .bi-cart, .bi-search {
+    color: #333 !important;
+    padding: 0.5rem 1rem !important;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    position: relative;
+    font-size: 1rem;
+}
+
+.navLink:hover, .moreButton:hover, .categoryParentLink:hover,
+.bi-person:hover, .bi-cart:hover, .bi-search:hover {
+    color: #dc3545 !important;
+}
+
+/* Underline Effect */
+.navLink::after, .navbar .categoryParentLink::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #dc3545;
+    transition: width 0.3s ease;
+}
+
+.navLink:hover::after, .navbar .categoryParentLink:hover::after {
+    width: 100%;
+}
+
+/* More Button */
+.moreButton {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, transparent 0%, white 20%);
+}
+
+.moreButton:hover {
+    background: linear-gradient(90deg, transparent 0%, #fff5f5 20%);
+}
+
+/* Menus */
+.moreMenu, .dropdown-menu, .userMenu {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.moreMenu, .dropdown-menu {
+    min-width: 200px;
+    max-height: 60vh;
+    overflow-y: auto;
+    margin-top: 0.5rem !important;
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+    right: 0 !important;
+    left: auto !important;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.moreMenu.show, .dropdown-menu.show {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    pointer-events: auto;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Dropdowns */
+.dropdownMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background: white;
+    z-index: 1000;
+    animation: slideDown 0.2s ease-out;
+
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+
+.dropdownItem, .dropdown-item {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.dropdownItem:hover, .dropdown-item:hover {
+    background: #f8f9fa;
+    color: #dc3545;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* User Menu */
+.userMenu {
+    position: absolute !important;
+    min-width: 140px;
+    right: 0 !important;
+    transform-origin: top right;
+    transition: opacity 0.2s ease, transform 0.2s ease !important;
+    font-size: 0.8rem;
+}
+
+.userMenu::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: transparent;
+}
+
+.userMenu:hover {
+    background-color: #f8f9fa;
+}
+
+/* Search */
+.searchGroup {
+    position: relative;
+    transition: width 0.3s ease;
+}
+
+/* Category Link */
+.categoryParentLink {
+    text-decoration: none !important;
+    display: block;
+    position: relative;
+    z-index: 1;
+}
+
+/* Icon Hover Cleanup */
+.navbar .badge,
+.navbar .bi-person,
+.navbar .bi-cart,
+.navbar .bi-search {
+    transition: color 0.3s ease, background-color 0.3s ease;
+}

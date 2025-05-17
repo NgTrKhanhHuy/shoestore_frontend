@@ -1,0 +1,28 @@
+/* Admin.module.css */
+
+/* Nút Thêm Sản Phẩm */
+.addProductButton {
+    font-size: 16px;
+    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    background-color: #28a745; /* Màu xanh lá cây */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.addProductButton:hover {
+    background-color: #218838; /* Màu khi hover */
+}
+
+.addProductButton i {
+    margin-right: 8px; /* Khoảng cách giữa biểu tượng và chữ */
+}
+
+.addProductButtonContainer {
+    text-align: right; /* Đảm bảo nút nằm ở góc phải */
+    margin-bottom: 20px;
+}

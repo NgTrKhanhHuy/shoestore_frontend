@@ -1,0 +1,227 @@
+/* AdminOrders.module.css */
+
+.container {
+    max-width: 1200px;
+    margin: 2rem 2rem;
+    padding: 0 1rem;
+}
+.breadcrumb {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+}
+
+.breadcrumb-item a {
+    color: #666;
+    text-decoration: none;
+}
+
+.breadcrumb-item.active {
+    color: #333;
+    font-weight: 500;
+}
+.pageTitle {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.searchContainer {
+    margin-bottom: 1.5rem;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: #dc3545;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+.tabContainer {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.tabButton {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 20px;
+    background: #f1f1f1;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tabButton:hover {
+    background: #e2e2e2;
+}
+
+.activeTab {
+    background: #dc3545;
+    color: white;
+}
+
+.tableContainer {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.orderTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.orderTable th {
+    background: #f8f9fa;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #eee;
+}
+
+.tableRow {
+    transition: background-color 0.2s ease;
+}
+
+.tableRow:hover {
+    background-color: #f9f9f9;
+}
+
+.orderTable td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.orderId a {
+    color: #dc3545;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.orderId a:hover {
+    text-decoration: underline;
+}
+
+.status {
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+.status0 { background: #fff3cd; color: #856404; } /* Chờ xử lý */
+.status1 { background: #cce5ff; color: #004085; } /* Đang chuẩn bị */
+.status2 { background: #d4edda; color: #155724; } /* Đang vận chuyển */
+.status3 { background: #d1ecf1; color: #0c5460; } /* Hoàn thành */
+.status4 { background: #f8d7da; color: #721c24; } /* Đã hủy */
+
+.amount {
+    font-weight: 600;
+    color: #dc3545;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.actionButton {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.confirmButton {
+    background: #28a745;
+    color: white;
+}
+
+.confirmButton:hover {
+    background: #218838;
+}
+
+.cancelButton {
+    background: #dc3545;
+    color: white;
+}
+
+.cancelButton:hover {
+    background: #c82333;
+}
+
+.pagination {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.pageButton {
+    padding: 0.5rem 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pageButton:hover {
+    background: #f1f1f1;
+}
+
+.activePage {
+    background: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.error {
+    color: #dc3545;
+    padding: 1rem;
+    background: #f8d7da;
+    border-radius: 4px;
+    margin: 1rem 0;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}

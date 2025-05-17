@@ -1,0 +1,341 @@
+/* Cart.module.css */
+
+.container {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 0;
+}
+.breadcrumb {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+}
+.breadcrumb-item a {
+    color: #666;
+    text-decoration: none;
+}
+
+.breadcrumb-item.active {
+    color: #333;
+    font-weight: 500;
+}
+.cartItems {
+    flex: 3.15;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
+
+.summary {
+    flex: 0.85;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    height: fit-content;
+}
+
+.cartHeader {
+    display: flex;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 1rem;
+}
+
+.cartTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.cartTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cartItem {
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.cartItem.selected {
+    background-color: #f9f9f9;
+}
+
+.cartItem:last-child {
+    border-bottom: none;
+}
+
+.cartItemCell {
+    padding: 1rem 0.5rem;
+    vertical-align: middle;
+}
+
+.itemCheckbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #dc3545;
+}
+
+.removeItem {
+    color: #999;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.2s ease;
+    position: relative;
+}
+
+.removeItem:hover {
+    color: #dc3545;
+}
+
+.removeItem::after {
+    content: "Xóa";
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.removeItem:hover::after {
+    opacity: 1;
+}
+
+.itemImage {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.itemInfo {
+    padding-left: 1rem;
+}
+
+.itemName {
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+    color: #333;
+}
+
+.itemVariant {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.itemPrice {
+    font-weight: 600;
+    color: #333;
+}
+
+.quantityControl {
+    display: flex;
+    align-items: center;
+}
+
+.quantityButton {
+    width: 30px;
+    height: 30px;
+    background: #f1f1f1;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.quantityButton:hover {
+    background: #ddd;
+}
+
+.quantityInput {
+    width: 50px;
+    height: 30px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-left: none;
+    border-right: none;
+    -moz-appearance: textfield;
+}
+
+.quantityInput::-webkit-outer-spin-button,
+.quantityInput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.summaryTitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.summaryItem {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.summaryTotal {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 1rem 0;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.couponButton {
+    color: #dc3545;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.couponButton:hover {
+    text-decoration: underline;
+}
+
+.paymentMethods {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.paymentMethod {
+    width: 60px;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.paymentMethod:hover {
+    border-color: #dc3545;
+}
+
+.checkoutButton {
+    width: 100%;
+    padding: 0.8rem;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.checkoutButton:hover {
+    background: #c82333;
+}
+
+.emptyCart {
+    text-align: center;
+    padding: 3rem 0;
+    color: #666;
+}
+
+.emptyCartIcon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ddd;
+}
+
+.emptyCartMessage {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.continueShopping {
+    color: #dc3545;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.continueShopping:hover {
+    text-decoration: underline;
+}
+/* Thêm vào Cart.module.css */
+
+.itemPrice {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.currentPrice {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #dc3545;
+}
+
+.originalPrice {
+    font-size: 0.8rem;
+    color: #999;
+    text-decoration: line-through;
+    font-weight: 400;
+}
+
+.discountTag {
+    background: #dc3545;
+    color: white;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    align-self: flex-start;
+}
+
+/* Thêm hover effect cho link ảnh */
+.itemImage {
+    transition: transform 0.2s ease;
+}
+
+.itemImage:hover {
+    transform: scale(1.03);
+}
+
+.itemName {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.itemName:hover {
+    color: #dc3545;
+}

@@ -197,6 +197,16 @@ export default function CartPage() {
     if (loading) return <div className={styles.loading}>Đang tải giỏ hàng...</div>;
 
     return (
+        <><nav aria-label="breadcrumb" className={styles.breadcrumb}>
+            <ol className="breadcrumb">
+                <li className="breadcrumb-item">
+                    <Link href="/">Trang chủ</Link>
+                </li>
+                <li className="breadcrumb-item active" aria-current="page">
+                    Giỏ hàng
+                </li>
+            </ol>
+        </nav>
         <div className={styles.container}>
 
             {cartDetails.length === 0 ? (
@@ -210,16 +220,6 @@ export default function CartPage() {
             ) : (
                 <>
                     <div className={styles.cartItems}>
-                        <nav aria-label="breadcrumb" className={styles.breadcrumb}>
-                            <ol className="breadcrumb">
-                                <li className="breadcrumb-item">
-                                    <Link href="/">Trang chủ</Link>
-                                </li>
-                                <li className="breadcrumb-item active" aria-current="page">
-                                    giỏ hàng
-                                </li>
-                            </ol>
-                        </nav>
 
                         <div className={styles.cartHeader}>
                             <h2 className={styles.cartTitle}>Giỏ hàng</h2>
@@ -362,6 +362,6 @@ export default function CartPage() {
                     </div>
                 </>
             )}
-        </div>
+        </div></>
     );
 }

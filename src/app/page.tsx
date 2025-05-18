@@ -183,9 +183,15 @@ export default function HomePage() {
 
                     <div className={styles.productsGrid}>
                         {products.map((product) => (
+
                             <div key={product.id} className={styles.productCard}>
-                                <div className={styles.imageContainer}>
+                                <Link
+                                     href={`/products/${product.id}`} // Thêm id
+
+                                >
+                                    <div className={styles.imageContainer}>
                                     <Image
+
                                         src={`http://localhost:8080${product.imageUrl}`}
                                         alt={product.name}
                                         fill
@@ -197,6 +203,8 @@ export default function HomePage() {
                     </span>
                                     )}
                                 </div>
+                                </Link>
+
                                 <div className={styles.productInfo}>
                                     <h3 className={styles.productName}>{product.name}</h3>
                                     <p className={styles.productPrice}>

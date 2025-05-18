@@ -150,7 +150,15 @@ export default function Header() {
     return (
         <Navbar expand="lg" className={styles.navbar} bg="white" variant="light">
             <Container fluid>
-                <Navbar.Brand href="/" className="fw-bold">GIAY</Navbar.Brand>
+                <Navbar.Brand href="/" className="d-flex align-items-center" style={{margin:"0 80px 0 15px "}}>
+                    <img
+                        src="http://localhost:8080/uploads/images/logo-ofc.png"
+                        alt="Logo"
+                        height="40"
+                        style={{ objectFit: 'contain' }}
+                    />
+                </Navbar.Brand>
+
 
                 <Navbar.Toggle aria-controls="main-nav" />
 

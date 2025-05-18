@@ -55,8 +55,9 @@ export default function ProductsPage() {
         const sizes = searchParams.getAll('sizes')
 
         if (categoryId) {
-            const finalCategoryId = findLastLeaf(Number(categoryId))
-            setSelectedCategory(finalCategoryId)
+            // const finalCategoryId = findLastLeaf(Number(categoryId))
+            // setSelectedCategory(finalCategoryId)
+            setSelectedCategory(Number(categoryId)) // Sửa thành set trực tiếp
         }
 
         if (search) {
@@ -102,12 +103,12 @@ export default function ProductsPage() {
     }
 
     // Find last leaf category
-    const findLastLeaf = (categoryId: number): number => {
-        const category = categories.find((c) => c.id === categoryId)
-        if (!category || category.children.length === 0) return categoryId
-        const lastChild = category.children[category.children.length - 1]
-        return findLastLeaf(lastChild.id)
-    }
+    // const findLastLeaf = (categoryId: number): number => {
+    //     const category = categories.find((c) => c.id === categoryId)
+    //     if (!category || category.children.length === 0) return categoryId
+    //     const lastChild = category.children[category.children.length - 1]
+    //     return findLastLeaf(lastChild.id)
+    // }
 
     // Handle category selection
     // const handleCategoryChange = (categoryId: string) => {
@@ -118,22 +119,19 @@ export default function ProductsPage() {
     // }
     const handleCategoryChange = (categoryId: string) => {
         const id = categoryId ? Number(categoryId) : null
-        const finalCategoryId = id ? findLastLeaf(id) : null
 
-        // Cập nhật URL mà không reload trang
+        // Xóa logic findLastLeaf
         const params = new URLSearchParams(window.location.search)
-        if (finalCategoryId) {
-            params.set('categoryId', finalCategoryId.toString())
+        if (id) {
+            params.set('categoryId', id.toString())
         } else {
             params.delete('categoryId')
         }
-        // Giữ lại các query params khác nếu cần
-        window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`)
 
-        setSelectedCategory(finalCategoryId)
+        window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`)
+        setSelectedCategory(id)
         setCurrentPage(0)
     }
-
     // Handle size selection
     const handleSizeChange = (size: string) => {
         setSelectedSizes((prev) =>

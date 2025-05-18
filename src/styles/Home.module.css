@@ -8,12 +8,12 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    margin: 0 40px;
+    margin: 0 20px;
 }
 
 .main {
     flex: 1;
-    padding-top: 80px;
+    padding-top: 5px;
 }
 
 .hero, .footer {
@@ -197,4 +197,192 @@ body {
 .navbar .bi-cart,
 .navbar .bi-search {
     transition: color 0.3s ease, background-color 0.3s ease;
+}
+/* Banner Section */
+.bannerContainer {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+}
+
+.bannerWrapper {
+    position: relative;
+    height: 100%;
+}
+
+.bannerSlide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.bannerSlide.active {
+    opacity: 1;
+}
+
+.bannerImage {
+    object-fit: cover;
+}
+
+.bannerControls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    padding: 0 20px;
+}
+
+.controlPrev,
+.controlNext {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1.5rem;
+}
+
+/* Policy Section */
+.policySection {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding: 4rem 0;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.policyItem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.policyIcon {
+    object-fit: contain;
+}
+
+.policyText h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.policyText p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Season Section */
+.seasonSection {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.seasonItem {
+    position: relative;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.seasonItem:hover {
+    transform: scale(1.05);
+}
+
+.seasonImage {
+    object-fit: cover;
+}
+
+/* Fixed Banner */
+.fixedBanner {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    margin: 4rem 0;
+}
+
+.fixedBannerImage {
+    object-fit: cover;
+}
+
+/* Products Section */
+.productsSection {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.seeAll {
+    color: #dc3545;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.productsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+.productCard {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.productCard:hover {
+    transform: translateY(-5px);
+}
+
+.imageContainer {
+    position: relative;
+    aspect-ratio: 1/1;
+}
+
+.productImage {
+    object-fit: cover;
+}
+
+.discountBadge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}
+
+.productInfo {
+    padding: 1rem;
+}
+
+.productName {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.productPrice {
+    color: #dc3545;
+    font-weight: bold;
 }

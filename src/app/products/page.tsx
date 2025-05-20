@@ -268,6 +268,7 @@ export default function ProductsPage() {
                                 <img
                                     src={`http://localhost:8080${product.imageUrl}`}
                                     alt={product.name}
+                                    loading="lazy"
                                     className={styles.productImage}
                                 />
                                 {hoveredProduct === product.id && (

@@ -108,7 +108,7 @@ export default function CheckoutPage() {
                 setAddress("");
                 setPhone("");
             } else {
-                alert("Có lỗi xảy ra khi gửi đơn hàng.");
+                alert("mặt hàng không đủ trong kho, vui lòng xem lại!");
             }
         } catch (error) {
             console.error("Lỗi khi gửi đơn hàng:", error);
@@ -235,7 +235,7 @@ export default function CheckoutPage() {
                     <span>Miễn phí</span>
                   </span>
                                 ) : (
-                                    <span>{(SHIPPING_FEE/1000).toFixed(0)}đk</span>
+                                    <span>{(SHIPPING_FEE/1000).toFixed(0)}k</span>
                                 )}
                             </div>
 

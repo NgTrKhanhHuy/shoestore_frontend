@@ -544,7 +544,7 @@ export default function AddProductPage() {
                 </div>
 
                 {/* Submit */}
-                <button type="submit" className="btn btn-primary w-100">
+                <button type="submit" className="btn btn-primary w-15">
                     Thêm Sản Phẩm
                 </button>
             </form>

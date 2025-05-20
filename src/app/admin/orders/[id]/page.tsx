@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import {formatCurrencySimple} from "@/lib/api";
+import {formatCurrencySimple, formatDate} from "@/lib/api";
 
 interface OrderItem {
     variantId: number;
@@ -117,7 +117,7 @@ export default function AdminOrderDetailsPage() {
         <div className="container py-5" style={{marginTop:"15px"}}>
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <h1>Chi tiết đơn hàng #{orderDetails.id}</h1>
-                <Link href="admin/orders" className="btn btn-secondary">
+                <Link href={"http://localhost:3000/admin/orders"} className="btn btn-secondary">
                     Quay lại danh sách
                 </Link>
             </div>
@@ -127,7 +127,7 @@ export default function AdminOrderDetailsPage() {
                     <div className="row">
                         <div className="col-md-6">
                             <h5>Thông tin đơn hàng</h5>
-                            <p><strong>Ngày tạo:</strong> {new Date(orderDetails.createdAt).toLocaleString()}</p>
+                            <p><strong>Ngày tạo:</strong> {formatDate(orderDetails.createdAt)}</p>
                             <p><strong>Trạng thái:</strong> {statusMap[orderDetails.status] || "Không xác định"}</p>
                             {orderDetails.status === 0 && (
                                 <div className="btn-group">

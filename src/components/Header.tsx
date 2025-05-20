@@ -167,7 +167,7 @@ export default function Header() {
                         {visibleCategories.map((category) => (
                             <div
                                 key={category.id}
-                                className="position-relative d-inline-block"
+                                className="position-relative d-inline-block" style={{margin:"0 15px"}}
                                 onMouseEnter={() => setActiveCategory(category.id.toString())}
                                 onMouseLeave={() => setActiveCategory(null)}
                             >

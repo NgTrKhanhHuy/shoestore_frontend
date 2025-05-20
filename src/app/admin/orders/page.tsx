@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { formatCurrencySimple } from '@/lib/api'; // Import hàm từ api.ts
+import {formatCurrencySimple, formatDate} from '@/lib/api';
+import dayjs from "dayjs"; // Import hàm từ api.ts
 
 
 interface OrderItem {
@@ -72,6 +73,7 @@ export default function AdminOrders() {
                 withCredentials: true,
             });
             setOrders(orders.map(order => order.id === orderId ? { ...order, status: newStatus } : order));
+
         } catch (err) {
             setError("Cập nhật trạng thái thất bại. Vui lòng thử lại.");
             console.error("Lỗi khi cập nhật trạng thái:", err);
@@ -83,6 +85,7 @@ export default function AdminOrders() {
             setPage(newPage);
         }
     };
+
 
     return (
         <div className="container py-5" style={{ marginTop: "15px" }}>
@@ -129,7 +132,8 @@ export default function AdminOrders() {
                             <td>
                                 <Link href={`orders/${order.id}`}>{order.id}</Link>
                             </td>
-                            <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                            <td>{formatDate(order.createdAt)}</td>
+
                             <td>{statusMap[order.status] || "Không xác định"}</td>
                             <td>
                                 {order.items

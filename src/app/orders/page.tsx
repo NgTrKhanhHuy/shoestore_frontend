@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "@/styles/Orders.module.css";
+import {formatCurrencySimple, formatDate} from "@/lib/api";
 
 interface OrderItem {
     price: number;
@@ -142,19 +143,18 @@ export default function OrdersPage() {
                                 <td className={styles.orderId}>
                                     <Link href={`/orders/${order.id}`}>{order.id}</Link>
                                 </td>
-                                <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                                <td>{formatDate(order.createdAt)}</td>
                                 <td>
                                         <span className={`${styles.status} ${styles[`status${order.status}`]}`}>
                                             {statusMap[order.status]}
                                         </span>
                                 </td>
                                 <td className={styles.amount}>
-                                    $
                                     {order.items
-                                        ? order.items
-                                            .reduce((total, item) => total + (item.price || 0), 0)
-                                            .toFixed(2)
-                                        : "0.00"}
+                                        ? formatCurrencySimple(
+                                            order.items.reduce((total, item) => total + (item.price || 0), 0)
+                                        )
+                                        : "0₫"}
                                 </td>
                                 <td>
                                     <div className={styles.actions}>

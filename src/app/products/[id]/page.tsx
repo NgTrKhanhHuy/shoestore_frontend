@@ -138,6 +138,9 @@ export default function ProductDetailPage() {
                         <Link href="/">Trang chủ</Link>
                     </li>
                     <li className="breadcrumb-item active" aria-current="page">
+                       Sản phẩm
+                    </li>
+                    <li className="breadcrumb-item active" aria-current="page">
                         {product.name}
                     </li>
                 </ol>

@@ -44,7 +44,7 @@ body {
 
 .navLink, .moreButton, .categoryParentLink, .bi-person, .bi-cart, .bi-search {
     color: #333 !important;
-    padding: 0.5rem 1rem !important;
+    padding: 0.5rem 0.3rem !important;
     transition: color 0.3s ease;
     display: flex;
     align-items: center;

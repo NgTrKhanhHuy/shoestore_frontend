@@ -132,7 +132,7 @@ export default function RegisterForm() {
 
                 <Form className={styles.registerForm} onSubmit={handleSubmit(onSubmit)}>
                     {/* Email */}
-                    <Form.Group controlId="formEmail" className="mb-4">
+                    <Form.Group controlId="formEmail" className="mb-4 position-relative">
                         <Form.Label className={styles.formLabel}>
                             Email <span className="text-danger">*</span>
                         </Form.Label>
@@ -142,12 +142,15 @@ export default function RegisterForm() {
                             className={styles.formControl}
                             {...register('email')}
                             isInvalid={!!errors.email}
+                            isValid={!!emailValue && !errors.email}
                         />
                         <Form.Control.Feedback type="invalid">{errors.email?.message}</Form.Control.Feedback>
+                        {!errors.email && emailValue && (
+                            <span className="position-absolute top-50 end-0 translate-middle-y pe-3 text-success"></span>
+                        )}
                     </Form.Group>
 
-                    {/* Username */}
-                    <Form.Group controlId="formUsername" className="mb-4">
+                    <Form.Group controlId="formUsername" className="mb-4 position-relative">
                         <Form.Label className={styles.formLabel}>
                             Tên người dùng <span className="text-danger">*</span>
                         </Form.Label>
@@ -157,12 +160,15 @@ export default function RegisterForm() {
                             className={styles.formControl}
                             {...register('username')}
                             isInvalid={!!errors.username}
+                            isValid={!!usernameValue && !errors.username}
                         />
                         <Form.Control.Feedback type="invalid">{errors.username?.message}</Form.Control.Feedback>
+                        {!errors.username && usernameValue && (
+                            <span className="position-absolute top-50 end-0 translate-middle-y pe-3 text-success"></span>
+                        )}
                     </Form.Group>
 
-                    {/* Password */}
-                    <Form.Group controlId="formPassword" className="mb-4">
+                    <Form.Group controlId="formPassword" className="mb-4 position-relative">
                         <Form.Label className={styles.formLabel}>
                             Mật khẩu <span className="text-danger">*</span>
                         </Form.Label>
@@ -172,12 +178,15 @@ export default function RegisterForm() {
                             className={styles.formControl}
                             {...register('password')}
                             isInvalid={!!errors.password}
+                            isValid={!!watch('password') && !errors.password}
                         />
                         <Form.Control.Feedback type="invalid">{errors.password?.message}</Form.Control.Feedback>
+                        {!errors.password && watch('password') && (
+                            <span className="position-absolute top-50 end-0 translate-middle-y pe-3 text-success"></span>
+                        )}
                     </Form.Group>
 
-                    {/* Confirm Password */}
-                    <Form.Group controlId="formConfirmPassword" className="mb-4">
+                    <Form.Group controlId="formConfirmPassword" className="mb-4 position-relative">
                         <Form.Label className={styles.formLabel}>
                             Nhập lại mật khẩu <span className="text-danger">*</span>
                         </Form.Label>
@@ -187,9 +196,14 @@ export default function RegisterForm() {
                             className={styles.formControl}
                             {...register('confirmPassword')}
                             isInvalid={!!errors.confirmPassword}
+                            isValid={!!watch('confirmPassword') && !errors.confirmPassword}
                         />
                         <Form.Control.Feedback type="invalid">{errors.confirmPassword?.message}</Form.Control.Feedback>
+                        {!errors.confirmPassword && watch('confirmPassword') && (
+                            <span className="position-absolute top-50 end-0 translate-middle-y pe-3 text-success"></span>
+                        )}
                     </Form.Group>
+
 
                     {/* Submit */}
                     <Button type="submit" className={styles.registerButton} disabled={!isValid}>

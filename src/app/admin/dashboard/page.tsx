@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Bar, Line } from "react-chartjs-2";
 import { formatCurrencySimple } from '@/lib/api'; // Import hàm từ api.ts
+import dayjs from "dayjs"; // Cài thêm thư viện dayjs để xử lý ngày
+
 
 import {
     Chart as ChartJS,
@@ -46,30 +48,50 @@ export default function AdminDashboard() {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const fetchOrders = async () => {
-            setLoading(true);
-            setError(null);
+        const fetchAllOrders = async () => {
+            const allOrders: Order[] = [];
+            let page = 0;
+            let hasMore = true;
+
             try {
-                const response = await axios.get("http://localhost:8080/api/admin/orders", {
-                    withCredentials: true,
-                });
-                setOrders(response.data.content || response.data);
+                while (hasMore) {
+                    const response = await axios.get("http://localhost:8080/api/admin/orders", {
+                        withCredentials: true,
+                        params: {
+                            page,
+                            size: 50,
+                        }
+                    });
+
+                    const data = response.data;
+                    const content = data.content || data;
+
+                    allOrders.push(...content);
+
+                    // Kiểm tra nếu còn trang tiếp theo
+                    hasMore = data.totalPages ? page + 1 < data.totalPages : content.length > 0;
+                    page += 1;
+                }
+
+                setOrders(allOrders);
             } catch (err) {
-                setError("Không thể tải dữ liệu đơn hàng. Vui lòng thử lại.");
-                console.error("Lỗi khi tải dữ liệu:", err);
+                setError("Không thể tải toàn bộ đơn hàng.");
+                console.error(err);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchOrders();
+        fetchAllOrders();
     }, []);
 
     // Tính tổng doanh thu
     const getTotalRevenue = (orders: Order[]) => {
-        return orders.reduce((total, order) => {
-            return total + order.items.reduce((sum, item) => sum + (item.price || 0), 0);
-        }, 0);
+        return orders
+            .filter(order => order.status === 3)
+            .reduce((total, order) => {
+                return total + order.items.reduce((sum, item) => sum + (item.price || 0), 0);
+            }, 0);
     };
 
     // Tính số đơn hàng theo trạng thái
@@ -84,19 +106,33 @@ export default function AdminDashboard() {
 
 
     // Biểu đồ doanh thu theo ngày (Line chart)
+
+// Biểu đồ doanh thu theo ngày (Line chart)
     const getRevenueChartData = () => {
-        const labels = ["Ngày 1", "Ngày 2", "Ngày 3", "Ngày 4", "Ngày 5"]; // Giả lập dữ liệu ngày
-        const data = [1000, 2000, 1500, 2500, 1800]; // Doanh thu giả lập cho từng ngày
+        const revenueByDate: Record<string, number> = {};
+
+        orders
+            .filter(order => order.status === 3) // Chỉ lấy đơn đã hoàn thành
+            .forEach(order => {
+                const date = dayjs(order.createdAt).format("DD-MM-YYYY");
+                const orderTotal = order.items.reduce((sum, item) => sum + (item.price || 0), 0);
+                revenueByDate[date] = (revenueByDate[date] || 0) + orderTotal;
+            });
+
+        const sortedDates = Object.keys(revenueByDate).sort((a, b) =>
+            dayjs(a, "DD-MM-YYYY").unix() - dayjs(b, "DD-MM-YYYY").unix()
+        );
 
         return {
-            labels,
+            labels: sortedDates,
             datasets: [
                 {
                     label: "Doanh thu (VND)",
-                    data,
+                    data: sortedDates.map(date => revenueByDate[date]),
                     backgroundColor: "rgba(75, 192, 192, 0.2)",
                     borderColor: "rgba(75, 192, 192, 1)",
                     borderWidth: 1,
+                    tension: 0.3,
                 },
             ],
         };

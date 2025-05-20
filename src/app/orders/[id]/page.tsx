@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import styles from "@/styles/OrderDetail.module.css";
+import {formatCurrencySimple, formatDate} from "@/lib/api";
 
 
 interface OrderItem {
@@ -104,7 +105,7 @@ export default function OrderDetailsPage() {
 
             <div className={styles.header}>
                 <h1 className={styles.pageTitle}>Đơn hàng #{orderDetails.id}</h1>
-                <Link href="/admin/orders" className={styles.backButton}>
+                <Link href="http://localhost:3000/orders" className={styles.backButton}>
                     ← Quay lại danh sách
                 </Link>
             </div>
@@ -113,12 +114,12 @@ export default function OrderDetailsPage() {
                 {/* Cột thông tin khách hàng */}
                 <div className={styles.customerInfo}>
                     <div className={styles.infoCard}>
-                        <h3 className={styles.sectionTitle}>Thông tin khách hàng</h3>
+                        <h3 className={styles.sectionTitle}>Thông tin đơn hàng</h3>
                         <div className={styles.infoGrid}>
                             <div className={styles.infoItem}>
                                 <span className={styles.infoLabel}>Ngày đặt hàng:</span>
                                 <span className={styles.infoValue}>
-                                    {new Date(orderDetails.createdAt).toLocaleDateString()}
+                                    {formatDate(orderDetails.createdAt)}
                                 </span>
                             </div>
                             <div className={styles.infoItem}>
@@ -177,8 +178,8 @@ export default function OrderDetailsPage() {
                                         </div>
                                     </td>
                                     <td>{item.quantity}</td>
-                                    <td>${item.price.toFixed(2)}</td>
-                                    <td>${(item.price * item.quantity).toFixed(2)}</td>
+                                    <td>{formatCurrencySimple(item.price)}</td>
+                                    <td>{formatCurrencySimple(item.price * item.quantity)}</td>
                                 </tr>
                             ))}
                             </tbody>
@@ -187,10 +188,12 @@ export default function OrderDetailsPage() {
                         <div className={styles.totalAmount}>
                             <span>Tổng cộng:</span>
                             <span className={styles.amount}>
-                                $
+
                                 {orderDetails.items
-                                    .reduce((total, item) => total + item.price * item.quantity, 0)
-                                    .toFixed(2)}
+                                    ? formatCurrencySimple(
+                                    orderDetails.items.reduce((total, item) => total + item.price * item.quantity, 0))
+                                    : "0₫"
+                                    }
                             </span>
                         </div>
                     </div>

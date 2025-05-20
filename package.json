@@ -16,6 +16,7 @@
     "bootstrap": "^5.3.6",
     "bootstrap-icons": "^1.12.1",
     "chart.js": "^4.4.9",
+    "dayjs": "^1.11.13",
     "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
     "react": "^19.0.0",

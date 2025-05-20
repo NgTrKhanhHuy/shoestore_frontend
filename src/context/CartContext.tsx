@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "./AuthContext";
+import {router} from "next/client";
 
 // types.ts hoặc trong CartContext.tsx
 export interface CartItem {
@@ -24,12 +25,17 @@ interface CartContextType {
 
 }
 
+
+
+
+
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
-    const { user } = useAuth();
+    const { user, setUser } = useAuth();
 
     useEffect(() => {
         const storedCart = localStorage.getItem("cart");
@@ -45,12 +51,23 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
     }, [cartItems, user]);
 
+
+    const forceLogout = () => {
+        setUser(null);
+        setCartItems([]);
+        setIsAdmin(false);
+
+        localStorage.removeItem("cart");
+        localStorage.removeItem("user");
+        localStorage.removeItem("selectedItems");
+        localStorage.removeItem("userRole");
+
+    };
 // Trong CartContext.tsx
     useEffect(() => {
         if (user) {
             const mergeCart = async () => {
                 try {
-                    // Chỉ gửi variantId và quantity khi merge
                     const itemsToMerge = cartItems.map(item => ({
                         variantId: item.variantId,
                         quantity: item.quantity
@@ -64,17 +81,24 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
                     setCartItems(response.data.cartItems);
                     localStorage.removeItem("cart");
-                } catch (error) {
-                    console.error("Lỗi khi hợp nhất giỏ hàng:", error);
-                    // @ts-ignore
-                    if (error.response && error.response.status === 400) {
-                        // @ts-ignore
-                        alert("Không đủ hàng tồn kho: " + error.response.data);
+                } catch (error: any) {
+                    console.warn("Lỗi khi hợp nhất giỏ hàng:", error);
+
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            alert("Không đủ hàng tồn kho: " + error.response.data);
+                        } else if (error.response.status === 401 || error.response.status === 403) {
+                            alert("Phiên đăng nhập hết hạn hoặc không hợp lệ. Bạn sẽ được đăng xuất.");
+                            forceLogout(); // 👈 Gọi hàm đăng xuất
+                        } else {
+                            alert("Có lỗi xảy ra khi hợp nhất giỏ hàng. Vui lòng thử lại sau.");
+                        }
                     } else {
-                        alert("Có lỗi xảy ra khi hợp nhất giỏ hàng. Vui lòng thử lại sau.");
+                        alert("Không thể kết nối đến máy chủ.");
                     }
                 }
             };
+
             mergeCart();
         }
     }, [user]);

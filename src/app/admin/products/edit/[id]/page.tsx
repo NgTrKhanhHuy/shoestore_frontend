@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import {formatCurrencySimple} from "@/lib/api";
+import colorMap from "@/lib/colorMap";
 
 interface Variant {
     id?: number; // Variant cũ có id, variant mới thì id undefined
@@ -42,29 +43,6 @@ interface FlattenedCategory {
 }
 
 // NEW: Thêm colorMap để ánh xạ label màu sang mã hex
-const colorMap: Record<string, string> = {
-    'đỏ': 'red',
-    'xanh': 'blue',
-    'vàng': 'yellow',
-    'trắng': 'white',
-    'đen': 'black',
-    'xám': 'gray',
-    'xanh lá': 'green',
-    'hồng': 'pink',
-    'tím': 'purple',
-    'nâu': 'brown',
-    'cam': 'orange',
-    'be': 'beige',
-    'vàng chanh': 'lemon',
-    'màu mận': 'plum',
-    'xanh da trời': 'skyblue',
-    'xanh dương': 'navy',
-    'xanh lục': 'teal',
-    'xanh lam': 'cyan',
-    'vàng đậm': 'gold',
-    'bạc': 'silver',
-    'trắng ngà': 'ivory',
-};
 
 // NEW: Nhóm các màu theo tiền tố để hiển thị trong datalist
 const groupedColors: { group: string; options: { label: string; value: string }[] }[] = (() => {
@@ -202,16 +180,65 @@ export default function EditProductPage() {
         value: string
     ) => {
         setVariants((prev) => {
-            const newVariants = [...prev];
-            newVariants[index] = {
-                ...newVariants[index],
-                [field]: field === "stock" ? parseInt(value, 10) || 0 : value,
-            };
-            return newVariants;
+            const updatedVariants = [...prev];
+            const variant = { ...updatedVariants[index] };
+
+            if (field === "stock") {
+                variant.stock = parseInt(value) || 0;
+            } else {
+                (variant as any)[field] = value;
+            }
+
+            updatedVariants[index] = variant;
+
+            const updatedErrors: { [key: string]: string } = {};
+            const validColors = Object.keys(colorMap).map((c) => c.toLowerCase().trim());
+
+            const color = variant.color?.toLowerCase().trim();
+            const size = variant.size?.toString().trim();
+
+            // === Validate color ===
+            if (field === "color" && (!color || !validColors.includes(color))) {
+                updatedErrors[`variants[${index}].color`] = "Màu không hợp lệ. Vui lòng chọn từ danh sách.";
+            }
+
+            // === Validate size ===
+            const sizeNum = parseInt(size);
+            if (
+                field === "size" &&
+                (isNaN(sizeNum) || sizeNum < 33 || sizeNum > 45)
+            ) {
+                updatedErrors[`variants[${index}].size`] = "Kích thước phải từ 33 đến 45.";
+            }
+
+            // === Kiểm tra trùng biến thể (size + color) ===
+            const isDuplicate = updatedVariants.some((v, i) => {
+                return (
+                    i !== index &&
+                    v.size?.toString().trim() === size &&
+                    v.color?.toLowerCase().trim() === color
+                );
+            });
+
+            if (isDuplicate && size && color) {
+                updatedErrors[`variants[${index}].size`] = "Biến thể này đã tồn tại.";
+                updatedErrors[`variants[${index}].color`] = "Biến thể này đã tồn tại.";
+            }
+
+            // === Cập nhật lỗi ===
+            setErrors((prevErrors) => {
+                const updated = { ...prevErrors };
+                delete updated[`variants[${index}].size`];
+                delete updated[`variants[${index}].color`];
+                delete updated[`variants[${index}].stock`];
+
+                return { ...updated, ...updatedErrors };
+            });
+
+            return updatedVariants;
         });
-        const errorKey = `variants[${index}].${field}`;
-        setErrors((prev) => ({ ...prev, [errorKey]: "" }));
     };
+
 
     // Load dữ liệu sản phẩm khi component mount
     useEffect(() => {
@@ -253,6 +280,24 @@ export default function EditProductPage() {
         setErrors({});
         setMessage("");
 
+        let formHasError = false;
+        const newErrors: { [key: string]: string } = {};
+
+        // Validate variants: màu phải hợp lệ
+        variants.forEach((variant, index) => {
+            const colorLower = variant.color.trim().toLowerCase();
+            if (!labelToHexMap[colorLower]) {
+                newErrors[`variants[${index}].color`] = "Màu không hợp lệ, hãy chọn trong danh sách";
+                formHasError = true;
+            }
+        });
+
+        if (formHasError) {
+            setErrors(newErrors);
+            setMessage("Vui lòng sửa các lỗi trong biểu mẫu.");
+            return; // ⛔ KHÔNG submit nếu có lỗi
+        }
+
         // Tạo object product để cập nhật, thêm các trường cần thiết
         const product = {
             id: parseInt(productId, 10),
@@ -264,13 +309,10 @@ export default function EditProductPage() {
             variants: variants,
         };
 
-        // Nếu không có file mới, muốn giữ lại ảnh cũ, thêm field "oldImg"
         if (!file) {
-            // Ép kiểu product thành any để thêm thuộc tính oldImg
             (product as any).oldImg = oldImg;
         }
 
-        // Chuẩn bị FormData
         const productBlob = new Blob([JSON.stringify(product)], {
             type: "application/json",
         });
